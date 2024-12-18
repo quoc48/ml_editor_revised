@@ -32,6 +32,21 @@ def format_raw_df(df):
     )
     return df
 
+def train_vectorizer(df):
+    """
+    Train a vectorizer for some data.
+    Returns the vectorizer to be used to transform non-training data, in
+    addition to the training vectors
+    :param df: data to use to train the vectorizer
+    :return: trained vectorizers and training vectors
+    """
+    vectorizer = TfidfVectorizer(
+        strip_accents="ascii", min_df=5, max_df=0.5, max_features=10000
+    )
+
+    vectorizer.fit(df["full_text"].copy())
+    return vectorizer
+
 def get_vertorized_series(text_series, vectorizer):
     """
     Vectorizes an input series using a pre-trained vertorizer
