@@ -68,6 +68,40 @@ def get_normalized_series(df, col):
     """
     return (df[col] - df[col].mean()) / df[col].std()
 
+def add_text_features_to_df(df):
+    """
+    Ads features to DataFrame
+    :param df: DataFrame
+    :param pretrained_vectors: whether to use pretrained vectors for embeddings
+    :return: DataFrame with additional features
+    """
+    df["full_text"] = df["Title"].str.cat(df["body_text"], sep=" ", na_rep="")
+    df = add_v1_features(df.copy())
+
+    return df
+
+def add_v1_features(df):
+    """
+    Add our first features to an input DataFrame
+    :param df: DataFrame of questions
+    :return: DataFrame with added feature columns
+    """
+    df["action_verb_full"] = (
+        df["full_text"].str.contains("can", regex=False)
+        | df["full_text"].str.contains("What", regex=False)
+        | df["full_text"].str.contains("should", regex=False)
+    )
+    df["language_question"] = (
+        df["full_text"].str.contains("punctuate", regex=False)
+        | df["full_text"].str.contains("capitalize", regex=False)
+        | df["full_text"].str.contains("abbreviate", regex=False)
+    )
+    df["question_mark_full"] = df["full_text"].str.contains("?", regex=False)
+    df["text_len"] = df["full_text"].str.len()
+    return df
+   
+
+
 def get_vectorized_inputs_and_label(df):
     """
     Concatenate DataFrame features with text vectors
