@@ -42,8 +42,6 @@ fig = plt.figure(figsize=(16, 10))
 clus = KMeans(n_clusters=n_clusters, random_state=10)
 clusters = clus.fit_predict(vectorized_features)
 
-# Plot the dimentionality reduced features on a 2D plane
-
 
 # https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html#sphx-glr-auto-examples-cluster-plot-kmeans-silhouette-analysis-py
 range_n_clusters = [2, 3, 4, 5, 6]
