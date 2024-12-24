@@ -56,3 +56,25 @@ y_predicted = clf.predict(X_test)
 y_predicted_proba = clf.predict_proba(X_test)
 
 y_train.value_counts()
+
+def get_metrics(y_test, y_predicted):  
+    # true positives / (true positives+false positives)
+    precision = precision_score(y_test, y_predicted, pos_label=None,
+                                    average='weighted')             
+    # true positives / (true positives + false negatives)
+    recall = recall_score(y_test, y_predicted, pos_label=None,
+                              average='weighted')
+    
+    # harmonic mean of precision and recall
+    f1 = f1_score(y_test, y_predicted, pos_label=None, average='weighted')
+    
+    # true positives + true negatives/ total
+    accuracy = accuracy_score(y_test, y_predicted)
+    return accuracy, precision, recall, f1
+
+# Training accuracy
+# Thanks to https://datascience.stackexchange.com/questions/13151/randomforestclassifier-oob-scoring-method
+y_train_pred = np.argmax(clf.oob_decision_function_,axis=1)
+
+accuracy, precision, recall, f1 = get_metrics(y_train, y_train_pred)
+print("Training accuracy = %.3f, precision = %.3f, recall = %.3f, f1 = %.3f" % (accuracy, precision, recall, f1))
