@@ -88,3 +88,10 @@ vectorizer_path = Path("../models/vectorizer_1.pkl")
 joblib.dump(clf, model_path) 
 joblib.dump(vectorizer, vectorizer_path) 
 
+# The inference function expects an array of questions, so we created an array of length 1 to pass a single question
+test_q = ["bad question"]
+probs = get_model_probabilities_for_input_texts(test_q)
+
+# Index 1 corresponds to the positive class here
+print("%s probability of the question receiving a high score according to our model" % (probs[0][1]))
+
