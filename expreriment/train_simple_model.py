@@ -78,3 +78,6 @@ y_train_pred = np.argmax(clf.oob_decision_function_,axis=1)
 
 accuracy, precision, recall, f1 = get_metrics(y_train, y_train_pred)
 print("Training accuracy = %.3f, precision = %.3f, recall = %.3f, f1 = %.3f" % (accuracy, precision, recall, f1))
+
+accuracy, precision, recall, f1 = get_metrics(y_test, y_predicted)
+print("Validation accuracy = %.3f, precision = %.3f, recall = %.3f, f1 = %.3f" % (accuracy, precision, recall, f1))
