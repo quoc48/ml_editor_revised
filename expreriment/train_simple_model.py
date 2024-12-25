@@ -81,3 +81,10 @@ print("Training accuracy = %.3f, precision = %.3f, recall = %.3f, f1 = %.3f" % (
 
 accuracy, precision, recall, f1 = get_metrics(y_test, y_predicted)
 print("Validation accuracy = %.3f, precision = %.3f, recall = %.3f, f1 = %.3f" % (accuracy, precision, recall, f1))
+
+# Save the trained model and vectorizer to disk for futher analysis and use.
+model_path = Path("../models/model_1.pkl")
+vectorizer_path = Path("../models/vectorizer_1.pkl")
+joblib.dump(clf, model_path) 
+joblib.dump(vectorizer, vectorizer_path) 
+
