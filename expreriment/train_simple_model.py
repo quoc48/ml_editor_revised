@@ -73,7 +73,6 @@ def get_metrics(y_test, y_predicted):
     return accuracy, precision, recall, f1
 
 # Training accuracy
-# Thanks to https://datascience.stackexchange.com/questions/13151/randomforestclassifier-oob-scoring-method
 y_train_pred = np.argmax(clf.oob_decision_function_,axis=1)
 
 accuracy, precision, recall, f1 = get_metrics(y_train, y_train_pred)
