@@ -56,4 +56,9 @@ X_test, y_test = get_feature_vector_and_label(test_df, features)
 y_predicted = clf.predict(X_test)
 y_predicted_proba = clf.predict_proba(X_test)
 
+# Confusion matrix
+get_confusion_matrix_plot(y_predicted, y_test,figsize=(9, 9))
+plt.show()
+
+
 
