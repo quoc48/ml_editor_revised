@@ -1,0 +1,59 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from pathlib import Path
+from sklearn.externals import joblib
+
+import sys
+sys.path.append("..")
+import warnings
+warnings.filterwarnings('ignore')
+
+# Add the project root to sys.path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.append(str(project_root))
+
+from ml_editor.data_processing import (
+    format_raw_df,
+    get_split_by_author,
+    add_text_features_to_df,
+    get_vectorized_series,
+    get_vectorized_inputs_and_label,
+)
+
+from ml_editor.model_evaluation import get_confusion_matrix_plot, get_roc_plot, get_calibration_plot
+
+# First, load data
+data_path = Path('data/writers.csv')
+df = pd.read_csv(data_path)
+df = format_raw_df(df.copy())
+
+# Second, add feature and split the dataset
+df = add_text_features_to_df(df.loc[df["is_question"]].copy())
+train_df, test_df = get_split_by_author(df, test_size=0.2, random_state=40)
+
+# Third, load trained model and vectorizer
+model_path = Path("../models/model_1.pkl")
+clf = joblib.load(model_path)
+vectorizer_path = Path("../models/vectorizer_1.pkl")
+vectorizer = joblib.load(vectorizer_path)
+
+# Forth, use the vectorizer on our data to produce features that are ready for the model
+train_df["vectors"] = get_vectorized_series(train_df["full_text"].copy(), vectorizer)
+test_df["vectors"] = get_vectorized_series(test_df["full_text"].copy(), vectorizer)
+
+features = [
+    "action_verb_full",
+    "question_mark_full",
+    "text_len",
+    "language_question",
+]
+
+X_train, y_train = get_feature_vector_and_label(train_df, features)
+X_test, y_test = get_feature_vector_and_label(test_df, features)
+
+# Get the model's predictions on a held out test set
+y_predicted = clf.predict(X_test)
+y_predicted_proba = clf.predict_proba(X_test)
+
+
