@@ -60,5 +60,8 @@ y_predicted_proba = clf.predict_proba(X_test)
 get_confusion_matrix_plot(y_predicted, y_test,figsize=(9, 9))
 plt.show()
 
+# ROC Curve
+get_roc_plot(y_predicted_proba[:,1], y_test, figsize=(10,10))
+plt.show()
 
 
