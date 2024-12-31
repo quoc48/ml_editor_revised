@@ -64,4 +64,8 @@ plt.show()
 get_roc_plot(y_predicted_proba[:,1], y_test, figsize=(10,10))
 plt.show()
 
+# Calibration curve
+get_calibration_plot(y_predicted_proba[:,1], y_test, figsize=(9,9))
+
+
 
