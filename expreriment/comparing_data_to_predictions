@@ -9,7 +9,6 @@ sys.path.append("..")
 import warnings
 warnings.filterwarnings('ignore')
 
-# Add the project root to sys.path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.append(str(project_root))
 
@@ -66,6 +65,3 @@ plt.show()
 
 # Calibration curve
 get_calibration_plot(y_predicted_proba[:,1], y_test, figsize=(9,9))
-
-
-
