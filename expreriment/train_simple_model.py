@@ -11,7 +11,6 @@ np.random.seed(35)
 import warnings
 warnings.filterwarnings('ignore')
 
-# Add the project root (ML_EDITOR) to the Python path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.append(str(project_root))
 
