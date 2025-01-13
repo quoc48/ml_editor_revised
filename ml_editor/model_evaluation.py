@@ -59,3 +59,13 @@ def get_top_k(df, proba_col, true_label_col, k=5, decision_threshold=0.5):
         top_incorrect_negative,
         most_uncertain,
     )
+
+def get_feature_importance(clf, feature_names):
+    importances = clf.feature_importances_
+    indices_sorted_by_importance = np.argsort(importances)[::-1]
+    return list(
+        zip(
+            feature_names[indices_sorted_by_importance],
+            importances[indices_sorted_by_importance],
+        )
+    )
