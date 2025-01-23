@@ -69,3 +69,10 @@ print('\n'.join(["%s: %.2g" % (tup[0], tup[1]) for tup in get_feature_importance
 
 print("\nBottom %s importances:\n" % k)
 print('\n'.join(["%s: %.2g" % (tup[0], tup[1]) for tup in get_feature_importance(clf, np.array(features))[-k:]]))
+
+example_question = """
+Is displaying a binary class enough to guide a user
+"""
+q_score = get_question_score_from_input(example_question)
+
+print("%s probability of being a good question" % q_score)
